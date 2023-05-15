@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="style.css" />
+        <script src="app.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <h2 class="heading">All Products</h2>
+            <!-- extra useless buttons -->
+            <button class="addProduct" id="addProductBtn">
+                Add Product...
+            </button>
+            <button class="replacementButton" id="replaceProductBtn">
+                Click here for replacement...
+            </button>
+            <button class="replacementButton" id="insertBeforeBtn">
+                Insert before product...
+            </button>
+            <button class="replacementButton" id="deleteProductBtn">
+                Delete product...
+            </button>
+            <!-- form  -->
+            <div id="mainDiv" class="d-none">
+                <div class="form">
+                    <div class="form-group d-none" id="productIdDiv">
+                        <label>Product Id <strong>*</strong></label> <br />
+                        <input
+                            type="number"
+                            id="idInput"
+                            placeholder="1684161344023"
+                        />
+                        <div class="error-message d-none">
+                            Product Id is required
+                        </div>
+                    </div>
+                    <div class="form-group" id="productNameDiv">
+                        <label>Name <strong>*</strong></label> <br />
+                        <input type="text" id="name" placeholder="Grado" />
+                        <div class="error-message d-none">Name is required</div>
+                    </div>
+                    <div class="form-group" id="productPriceDiv">
+                        <label>Price <strong>*</strong></label> <br />
+                        <input type="number" id="price" placeholder="₹ 1000" />
+                        <div class="error-message d-none">
+                            Price is required
+                        </div>
+                    </div>
+                    <div class="form-group d-none">
+                        <label for="fileInput" id="fileInputLabel">Image</label>
+                        <br />
+                        <input type="file" id="fileInput" accept="image/*" />
+                    </div>
+                    <div class="form-group" id="productDescriptionDiv">
+                        <label>Specification / Description</label> <br />
+                        <textarea
+                            id="description"
+                            cols="30"
+                            rows="3"
+                            placeholder="Headphones are audio devices worn over the ears to listen to..."
+                        ></textarea>
+                    </div>
+                    <div class="form-group" id="uploadImgBtnDiv">
+                        <button class="uploadButton" id="uploadImgBtn">
+                            Upload Image <strong>*</strong>
+                        </button>
+                        <div class="error-message d-none">
+                            Image is required
+                        </div>
+                        <p class="fileDetails d-none">
+                            <span class="fileName"></span>
+                            <span class="fileSize"></span>
+                        </p>
+                    </div>
+                </div>
+                <button class="saveButton" id="saveProductBtn">
+                    Save Product
+                </button>
+            </div>
+            <br />
+            <!-- products listings -->
+            <h2 class="heading">Product Listings</h2>
+            <section id="listings">
+                <div class="no-data"><em> No data available </em></div>
+            </section>
+        </main>
+    </body>
+</html>
