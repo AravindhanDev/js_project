@@ -14,7 +14,7 @@ document.querySelector("h3").innerText = new Intl.DateTimeFormat("en-us", {
     timeZone: "Australia/Sydney",
 }).format(new Date())
 
-setInterval(changeYearColor, 2000)
+setInterval(changeYearColor, 3000)
 
 setInterval(changeDateTimeBackgroundColor, 1000)
 

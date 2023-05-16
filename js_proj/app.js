@@ -87,6 +87,14 @@ function fileToBase64(file) {
     })
 }
 
+listings.addEventListener("click", async function (e) {
+    const key1 = parseInt(e.currentTarget.lastElementChild.id)
+    const key2 = parseInt(e.target.innerText.slice(1))
+    if (key1 === key2) {
+        await navigator.clipboard.writeText(parseInt(key1))
+    }
+})
+
 listings.addEventListener("click", function (e) {
     const target = e.target.closest(".delete-product")
     if (target === null) return
@@ -109,7 +117,12 @@ function hideErrorMessage() {
 
 idInput.addEventListener("keypress", hideErrorMessage)
 
-nameInput.addEventListener("keypress", hideErrorMessage)
+nameInput.addEventListener("keypress", (event) => {
+    if (!/[a-zA-Z\s]/.test(event.key)) {
+        event.preventDefault()
+    }
+    hideErrorMessage()
+})
 
 priceInput.addEventListener("keypress", hideErrorMessage)
 
@@ -217,12 +230,12 @@ function deleteProductOperation(id) {
     element.parentNode.removeChild(element)
 }
 
-function renderProduct(product, id) {
+function renderProduct(product, id = 0) {
     let existingDiv = null
-    if (currentOption === "replaceProduct") {
+    if (currentOperation === "replaceProduct") {
         existingDiv = document.getElementById(product.id)
     }
-    if (currentOption === "insertBeforeProduct") {
+    if (currentOperation === "insertBeforeProduct") {
         existingDiv = document.getElementById(id)
     }
     let productDiv = document.createElement("div")
@@ -244,9 +257,9 @@ function renderProduct(product, id) {
     productId.classList.add("product-hash-id")
     let productDescription = document.createElement("p")
     productDescription.classList.add("product-description")
-    let deletePara = document.createElement("p")
-    let deleteLink = document.createElement("a")
-    deleteLink.classList.add("delete-product")
+    // let deletePara = document.createElement("p")
+    // let deleteLink = document.createElement("a")
+    // deleteLink.classList.add("delete-product")
     productDiv.appendChild(productImg)
     productDetailName.appendChild(document.createTextNode(product.name))
     productDetailPrice.appendChild(document.createTextNode("₹" + product.price))
@@ -259,63 +272,23 @@ function renderProduct(product, id) {
     )
     productDetailsDiv.appendChild(productId)
     productDetailsDiv.appendChild(productDescription)
-    deleteLink.appendChild(document.createTextNode("Delete Product"))
-    deletePara.appendChild(deleteLink)
-    productDetailsDiv.append(deletePara)
+    // deleteLink.appendChild(document.createTextNode("Delete Product"))
+    // deletePara.appendChild(deleteLink)
+    // productDetailsDiv.append(deletePara)
     productDiv.appendChild(productDetailsDiv)
-    if (currentOption === "addProduct") {
+    if (currentOperation === "addProduct") {
         listings.appendChild(productDiv)
     }
-    if (currentOption === "replaceProduct") {
+    if (currentOperation === "replaceProduct") {
         existingDiv.parentNode.replaceChild(productDiv, existingDiv)
     }
-    if (currentOption === "insertBeforeProduct") {
+    if (currentOperation === "insertBeforeProduct") {
         existingDiv.parentNode.insertBefore(productDiv, existingDiv)
     }
 }
 
 function renderProductsOnLoad(products) {
     for (let product of products) {
-        let productDiv = document.createElement("div")
-        productDiv.classList.add("product-listing")
-        productDiv.id = product.id
-        let productImg = document.createElement("img")
-        productImg.classList.add("product-img")
-        productImg.src = product.imgUrl
-        productImg.alt = product.name
-        let productDetailsDiv = document.createElement("div")
-        productDetailsDiv.classList.add("product-details")
-        let productDetailMain = document.createElement("div")
-        productDetailMain.classList.add("product-main")
-        let productDetailName = document.createElement("p")
-        productDetailName.classList.add("product-name")
-        let productDetailPrice = document.createElement("p")
-        productDetailPrice.classList.add("product-price")
-        let productDescription = document.createElement("p")
-        let productId = document.createElement("p")
-        productDescription.classList.add("product-description")
-        productId.classList.add("product-hash-id")
-        let deletePara = document.createElement("p")
-        let deleteLink = document.createElement("a")
-        deleteLink.classList.add("delete-product")
-        productDiv.appendChild(productImg)
-        productDetailName.appendChild(document.createTextNode(product.name))
-        productDetailPrice.appendChild(
-            document.createTextNode("₹" + product.price)
-        )
-        productId.appendChild(document.createTextNode("#" + product.id))
-        productDetailMain.appendChild(productDetailName)
-        productDetailMain.appendChild(productDetailPrice)
-        productDetailsDiv.appendChild(productDetailMain)
-        productDescription.appendChild(
-            document.createTextNode(product.description.slice(0, 30) + "...")
-        )
-        productDetailsDiv.appendChild(productId)
-        productDetailsDiv.appendChild(productDescription)
-        deleteLink.appendChild(document.createTextNode("Delete Product"))
-        deletePara.appendChild(deleteLink)
-        productDetailsDiv.append(deletePara)
-        productDiv.appendChild(productDetailsDiv)
-        listings.appendChild(productDiv)
+        renderProduct(product)
     }
 }

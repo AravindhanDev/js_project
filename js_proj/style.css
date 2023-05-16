@@ -180,3 +180,9 @@ input[type=number]::-webkit-outer-spin-button {
     border-radius: 5px;
     font-size: 0.9rem;
 }
+
+@media (max-width: 400px) {
+main {
+    padding: 0.5rem;
+}
+}
